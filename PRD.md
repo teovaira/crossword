@@ -44,13 +44,27 @@ Build a robust crossword solver that reads a crossword puzzle grid and a list of
 - follow clean JavaScript conventions and maintainable naming
 
 ## Architecture
-- `crosswordSolver.js`: public root export for Zone01-style checks
-- `src/crosswordSolver.js`: entry point and orchestration
-- `src/parser.js`: input parsing and slot detection
-- `src/solver.js`: backtracking algorithm and placement logic
-- `src/validation.js`: input and solution validation
-- `src/utils.js`: shared helpers and formatting functions
+- `crosswordSolver.js`: public entry point, orchestration, and root export for Zone01-style checks
+- `parser.js`: input parsing and slot detection
+- `solver.js`: backtracking algorithm and placement logic
+- `validation.js`: input and solution validation
+- `utils.js`: shared helpers and formatting functions
 - `tests/`: unit and integration test suites
+
+## Run Requirements
+The project cannot be run as a working solver yet because `crosswordSolver.js` and the helper modules are still placeholders.
+
+Before running the solver:
+- implement `crosswordSolver.js`
+- implement `parser.js`, `solver.js`, `validation.js`, and `utils.js`
+- add direct sample input or export the solver function for tests
+- add a `package.json` test script before using `npm test`
+
+Once implemented, the solver can be run from the project root with:
+
+```bash
+node crosswordSolver.js
+```
 
 ## Data Model
 
@@ -115,13 +129,13 @@ Use `H` for horizontal slots and `V` for vertical slots.
 
 ## Team Responsibilities
 - Team Lead / Integration:
-  - owns `src/crosswordSolver.js`, `src/validation.js`, `tests/integration.test.js`
+  - owns `crosswordSolver.js`, `validation.js`, `tests/integration.test.js`
   - coordinates merges and final behavior
 - Parser & Grid Logic:
-  - owns `src/parser.js`, parser tests, slot model
+  - owns `parser.js`, parser tests, slot model
   - provides stable slot output for solver
 - Solver / Backtracking:
-  - owns `src/solver.js`, solver tests
+  - owns `solver.js`, solver tests
   - provides unique-solution detection
 
 ## Risks
