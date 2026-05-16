@@ -1,0 +1,20 @@
+{
+  "name": "crossword",
+  "version": "1.0.0",
+  "description": "JavaScript crossword solver project for parsing a grid, detecting word slots, solving with backtracking, and printing either the unique solved grid or `Error`.",
+  "main": "crosswordSolver.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://platform.zone01.gr/git/ebasou/crossword.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
