@@ -1,6 +1,6 @@
 const { test } = require('node:test')
 const assert = require('node:assert/strict')
-const { canPlaceWord } = require('../solver.js')
+const { canPlaceWord, placeWord } = require('../solver.js')
 
 // normalized grid: numbers replaced with '' (empty string)
 const emptyGrid = [
@@ -47,5 +47,31 @@ test('canPlaceWord: rejects placement when crossing letter conflicts', () => {
 test('canPlaceWord: does not mutate the grid', () => {
   const slot = { row: 0, col: 0, dir: 'H', length: 4 }
   canPlaceWord(emptyGrid, slot, 'casa')
+  assert.equal(emptyGrid[0][0], '')
+})
+
+// --- placeWord ---
+
+test('placeWord: places word horizontally into correct cells', () => {
+  const slot = { row: 0, col: 0, dir: 'H', length: 4 }
+  const result = placeWord(emptyGrid, slot, 'casa')
+  assert.equal(result[0][0], 'c')
+  assert.equal(result[0][1], 'a')
+  assert.equal(result[0][2], 's')
+  assert.equal(result[0][3], 'a')
+})
+
+test('placeWord: places word vertically into correct cells', () => {
+  const slot = { row: 0, col: 2, dir: 'V', length: 4 }
+  const result = placeWord(emptyGrid, slot, 'alan')
+  assert.equal(result[0][2], 'a')
+  assert.equal(result[1][2], 'l')
+  assert.equal(result[2][2], 'a')
+  assert.equal(result[3][2], 'n')
+})
+
+test('placeWord: does not mutate the original grid', () => {
+  const slot = { row: 0, col: 0, dir: 'H', length: 4 }
+  placeWord(emptyGrid, slot, 'casa')
   assert.equal(emptyGrid[0][0], '')
 })
