@@ -12,8 +12,8 @@ Build a robust crossword solver that reads a crossword puzzle grid and a list of
 
 ## Functional Requirements
 - Input:
-  - `puzzle`: array of strings representing the crossword grid
-  - `words`: array of candidate words
+  - `puzzle`: a single string with rows separated by `\n`
+  - `words`: array of strings (no duplicates allowed)
 - Output:
   - solved crossword grid as text
   - or `Error` for invalid/unsolvable/ambiguous cases
@@ -28,19 +28,22 @@ Build a robust crossword solver that reads a crossword puzzle grid and a list of
 - enforce puzzle consistency and slot compatibility
 
 ### Invalid cases
-- malformed puzzle input
-- empty word list when slots exist
-- duplicate words, for example `['hello', 'hello']`
-- word count and slot requirements cannot match
-- no valid solution
-- more than one valid solution
+- `puzzle` is not a string (e.g. a number)
+- `words` is not an array (e.g. a number)
+- empty puzzle string
+- malformed puzzle: rows of unequal length or invalid characters
+- any cell contains a number higher than `2`
+- duplicate words in the input list
+- word count does not match the number of slots
 - numbers in the puzzle do not agree with the number of words starting from that cell
+- no valid solution exists
+- more than one valid solution exists (ambiguous puzzle)
 
 ## Non-functional Requirements
 - use arrow functions and clear module boundaries
 - keep functions small and testable
-- structure code for team collaboration and branch-based workflow
-- provide unit tests and integration tests
+- push directly to main with conventional commits
+- provide unit tests and integration tests using Node's built-in test runner
 - follow clean JavaScript conventions and maintainable naming
 
 ## Architecture
@@ -118,25 +121,14 @@ Use `H` for horizontal slots and `V` for vertical slots.
 - project structure supports clear team ownership and merges
 
 ## Team Workflow
-- branches:
-  - `main`
-  - `parser-logic`
-  - `solver-algorithm`
-  - `integration-testing`
-- each member works in own branch, commits small changes, and pushes early
-- integration lead merges parser and solver work into `main`
-- final validation and tests are run on `integration-testing`
+- all members push directly to `main`
+- use conventional commits: `feat:`, `fix:`, `chore:`, `docs:`, `test:`
+- commit small, push often
 
 ## Team Responsibilities
-- Team Lead / Integration:
-  - owns `crosswordSolver.js`, `validation.js`, `tests/integration.test.js`
-  - coordinates merges and final behavior
-- Parser & Grid Logic:
-  - owns `parser.js`, parser tests, slot model
-  - provides stable slot output for solver
-- Solver / Backtracking:
-  - owns `solver.js`, solver tests
-  - provides unique-solution detection
+- **Efi** (Team Lead): owns `validation.js`, `utils.js`, `tests/validation.test.js`, coordinates integration
+- **Alex** (Parser): owns `parser.js`, `tests/parser.test.js`, slot detection model
+- **Theo** (Solver): owns `solver.js`, `crosswordSolver.js`, `tests/solver.test.js`, `tests/integration.test.js`
 
 ## Risks
 - Intersections may be overwritten incorrectly during backtracking.
