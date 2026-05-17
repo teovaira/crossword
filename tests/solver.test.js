@@ -78,26 +78,28 @@ test('placeWord: does not mutate the original grid', () => {
 
 // --- solveCrossword ---
 
-// minimal 2x2 grid: one H slot and one V slot sharing [0][0]
-const tinyGrid = [
-  ['', ''],
-  ['', '.'],
+// 3x3 grid with one H slot (row 0, length 3) and one V slot (col 2, length 3)
+// they intersect at [0][2]
+// 'cat' H forces 't' at [0][2], so only 'top' fits the V slot (starts with 't')
+const uniqueGrid = [
+  ['', '', ''],
+  ['.', '.', ''],
+  ['.', '.', ''],
 ]
-const tinySlots = [
-  { row: 0, col: 0, dir: 'H', length: 2 },
-  { row: 0, col: 0, dir: 'V', length: 2 },
+const uniqueSlots = [
+  { row: 0, col: 0, dir: 'H', length: 3 },
+  { row: 0, col: 2, dir: 'V', length: 3 },
 ]
 
 test('solveCrossword: returns unique for a puzzle with one solution', () => {
-  // 'ab' H and 'ac' V share 'a' at [0][0] — only one valid arrangement
-  const result = solveCrossword(tinyGrid, tinySlots, ['ab', 'ac'])
+  const result = solveCrossword(uniqueGrid, uniqueSlots, ['cat', 'top'])
   assert.equal(result.status, 'unique')
   assert.ok(result.grid)
 })
 
 test('solveCrossword: returns none when no solution exists', () => {
-  // 'xy' and 'zz' conflict at [0][0] — x !== z
-  const result = solveCrossword(tinyGrid, tinySlots, ['xy', 'zz'])
+  // 'cat' forces 't' at [0][2], 'dog' starts with 'd' — conflict
+  const result = solveCrossword(uniqueGrid, uniqueSlots, ['cat', 'dog'])
   assert.equal(result.status, 'none')
 })
 
@@ -119,9 +121,9 @@ test('solveCrossword: returns multiple for ambiguous puzzle', () => {
 test('solveCrossword: solves the small audit puzzle correctly', () => {
   const auditGrid = [
     ['', '', '', ''],
-    ['.', '.', '', '.'],
+    ['', '.', '.', ''],
     ['', '', '', ''],
-    ['.', '.', '', '.'],
+    ['', '.', '.', ''],
   ]
   const auditSlots = [
     { row: 0, col: 0, dir: 'H', length: 4 },
