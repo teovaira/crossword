@@ -54,7 +54,7 @@ The solver should return one of these:
 { status: 'multiple' }
 ```
 
-## Person 1: Input Parser And Slot Detection
+## Alex: Input Parser And Slot Detection
 
 ### Coding Ownership
 - `parser.js`
@@ -130,7 +130,7 @@ Add real assertions in `tests/parser.test.js` for:
 - Person 2 can call `findSlots(grid)` and receive correct slot objects.
 - Parser tests pass.
 
-## Person 2: Validation And Output Utilities
+## Efi: Validation And Output Utilities
 
 ### Coding Ownership
 - `validation.js`
@@ -230,7 +230,7 @@ Add real assertions in `tests/validation.test.js` for:
 - Formatting produces exact expected output strings.
 - Validation tests pass.
 
-## Person 3: Backtracking Solver And Integration
+## Theo: Backtracking Solver And Integration
 
 ### Coding Ownership
 - `solver.js`
@@ -347,15 +347,17 @@ Add real assertions in `tests/integration.test.js` for every audit case:
 - no solution
 
 ### Package Setup
-Create `package.json` with a working test command. Recommended:
+`package.json` is already configured. Test script uses Node's built-in runner:
 
 ```json
 {
   "scripts": {
-    "test": "node --test"
+    "test": "node --test tests/*.test.js"
   }
 }
 ```
+
+Tests must use `node:test` and `node:assert/strict` — not Jest syntax.
 
 ### Acceptance Criteria
 - `node crosswordSolver.js` does not crash.
@@ -365,15 +367,18 @@ Create `package.json` with a working test command. Recommended:
 - All invalid audit cases print exactly `Error`.
 - The solver clearly uses backtracking.
 
-## Merge Plan
-1. Person 1 implements `parser.js` and parser tests.
-2. Person 2 implements `validation.js`, `utils.js`, and validation tests.
-3. Person 3 starts `solver.js` unit tests using simple handmade grids while waiting for parser output.
-4. Person 1 and Person 2 agree on invalid handling: return `null` or throw controlled errors.
-5. Person 3 wires everything in `crosswordSolver.js`.
-6. All people run `npm test`.
-7. All people manually run the audit examples.
-8. Fix output formatting last, because the audit expects exact text.
+## Integration Plan
+- All members push directly to `main`. Use conventional commits: `feat:`, `fix:`, `chore:`, `docs:`, `test:`.
+- Agreed error contract: `parsePuzzle` and `validateInputs` return `null` for invalid input. No `throw`.
+
+### Order
+1. Alex implements `parser.js` and parser tests.
+2. Efi implements `validation.js`, `utils.js`, and validation tests.
+3. Theo starts `solver.js` unit tests using simple handmade grids while waiting for parser output.
+4. Theo wires everything in `crosswordSolver.js` once parser and validation are ready.
+5. Everyone runs `npm test`.
+6. Everyone manually runs the audit examples with `node crosswordSolver.js`.
+7. Fix output formatting last — the audit expects exact text.
 
 ## Definition Of Done
 - Every person has written code in their owned implementation files.
