@@ -20,30 +20,30 @@ const getSlotStartCount = (slots, row, col, countSlotsStartingAt) => {
 const validateWords = words => {
   // The word list must be an array.
   if (!Array.isArray(words)) {
-    throw new TypeError('Words must be an array')
+    return false
   }
 
   // We keep track of words we have already seen so we can detect duplicates.
   const seenWords = new Set()
 
-  words.forEach(word => {
+  for (const word of words) {
     // Each item in the array must be a text string.
     if (typeof word !== 'string') {
-      throw new TypeError('Every word must be a string')
+      return false
     }
 
     // A word cannot be empty.
     if (word.length === 0) {
-      throw new Error('Words cannot be empty')
+      return false
     }
 
     // If we have already seen the same word, that is not allowed.
     if (seenWords.has(word)) {
-      throw new Error('Duplicate words are not allowed')
+      return false
     }
 
     seenWords.add(word)
-  })
+  }
 
   return true
 }
@@ -51,27 +51,30 @@ const validateWords = words => {
 const validatePuzzleNumbers = (grid, slots, countSlotsStartingAt) => {
   // Every slot must start on a numbered cell in the grid.
   // A slot is the place where a word will be placed.
-  slots.forEach(slot => {
+  for (const slot of slots) {
     const startCell = grid[slot.row] && grid[slot.row][slot.col]
 
     if (Number(startCell) <= 0) {
-      throw new Error('Every slot must start on a numbered cell')
+      return false
     }
-  })
+  }
 
   // Now check the grid itself to make sure the numbers are correct.
-  grid.forEach((row, rowIndex) => {
-    row.forEach((cell, colIndex) => {
+  for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
+    const row = grid[rowIndex]
+
+    for (let colIndex = 0; colIndex < row.length; colIndex++) {
+      const cell = row[colIndex]
       const cellNumber = Number(cell)
 
       // If this cell is blocked, empty, or not a number, skip it.
       if (!Number.isInteger(cellNumber) || cellNumber <= 0) {
-        return
+        continue
       }
 
       // Valid puzzle numbers are only 1 or 2.
       if (cellNumber > 2) {
-        throw new Error('Starting numbers cannot be higher than 2')
+        return false
       }
 
       const slotStartCount = getSlotStartCount(
@@ -83,10 +86,10 @@ const validatePuzzleNumbers = (grid, slots, countSlotsStartingAt) => {
 
       // The number printed in the cell must match how many words start there.
       if (slotStartCount !== cellNumber) {
-        throw new Error('Puzzle number does not match slot starts')
+        return false
       }
-    })
-  })
+    }
+  }
 
   return true
 }
@@ -94,7 +97,7 @@ const validatePuzzleNumbers = (grid, slots, countSlotsStartingAt) => {
 const validateSlotWordCount = (slots, words) => {
   // There must be the same number of slots as there are words.
   if (slots.length !== words.length) {
-    throw new Error('Number of slots must match number of words')
+    return false
   }
 
   return true
@@ -102,11 +105,11 @@ const validateSlotWordCount = (slots, words) => {
 
 const validateInputs = ({ grid, slots, words, countSlotsStartingAt }) => {
   // Run all validation checks before the crossword solver starts.
-  validateWords(words)
-  validateSlotWordCount(slots, words)
-  validatePuzzleNumbers(grid, slots, countSlotsStartingAt)
-
-  return true
+  return (
+    validateWords(words) &&
+    validateSlotWordCount(slots, words) &&
+    validatePuzzleNumbers(grid, slots, countSlotsStartingAt)
+  )
 }
 
 module.exports = {
