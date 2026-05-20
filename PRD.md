@@ -42,32 +42,40 @@ Build a robust crossword solver that reads a crossword puzzle grid and a list of
 ## Non-functional Requirements
 - use arrow functions and clear module boundaries
 - keep functions small and testable
-- push directly to main with conventional commits
 - provide unit tests and integration tests using Node's built-in test runner
 - follow clean JavaScript conventions and maintainable naming
+- print `Error` for invalid cases instead of crashing
 
 ## Architecture
 - `crosswordSolver.js`: public entry point, orchestration, and root export for Zone01-style checks
 - `parser.js`: input parsing and slot detection
 - `solver.js`: backtracking algorithm and placement logic
-- `validation.js`: input and solution validation
+- `validation.js`: input validation that returns `true` or `false`
 - `utils.js`: shared helpers and formatting functions
 - `tests/`: unit and integration test suites
 
 ## Run Requirements
-The project cannot be run as a working solver yet because `crosswordSolver.js` and the helper modules are still placeholders.
+The solver is implemented and can be imported from `crosswordSolver.js`.
 
-Before running the solver:
-- implement `crosswordSolver.js`
-- implement `parser.js`, `solver.js`, `validation.js`, and `utils.js`
-- add direct sample input or export the solver function for tests
-- add a `package.json` test script before using `npm test`
-
-Once implemented, the solver can be run from the project root with:
+Run the automated tests from the project root with:
 
 ```bash
-node crosswordSolver.js
+npm test
 ```
+
+Run the solver with custom arguments from the project root with this command
+format:
+
+```bash
+node -e "const crosswordSolver = require('./crosswordSolver.js'); const puzzle = YOUR_PUZZLE_STRING; const words = YOUR_WORDS_ARRAY; crosswordSolver(puzzle, words)"
+```
+
+Replace `YOUR_PUZZLE_STRING` with a puzzle string and `YOUR_WORDS_ARRAY` with an
+array of words.
+
+`node crosswordSolver.js` exits cleanly by itself because the file exports the
+function for the evaluator and tests; it does not include a hard-coded sample
+call.
 
 ## Data Model
 
@@ -115,20 +123,17 @@ Use `H` for horizontal slots and `V` for vertical slots.
 
 ## Success Criteria
 - unique valid solutions are printed correctly
-- invalid puzzles return `Error`
-- puzzles with multiple valid solutions return `Error`
+- invalid puzzles print `Error`
+- puzzles with multiple valid solutions print `Error`
 - all modules are independently testable
 - project structure supports clear team ownership and merges
 
-## Team Workflow
-- all members push directly to `main`
-- use conventional commits: `feat:`, `fix:`, `chore:`, `docs:`, `test:`
-- commit small, push often
-
-## Team Responsibilities
-- **Efi** (Team Lead): owns `validation.js`, `utils.js`, `tests/validation.test.js`, coordinates integration
-- **Alex** (Parser): owns `parser.js`, `tests/parser.test.js`, slot detection model
-- **Theo** (Solver): owns `solver.js`, `crosswordSolver.js`, `tests/solver.test.js`, `tests/integration.test.js`
+## Audit Readiness
+- `crosswordSolver.js` is present at the project root.
+- `crosswordSolver` is exported for tests and evaluator-style checks.
+- Invalid inputs, duplicate words, no solution, and multiple solutions print exactly `Error`.
+- The solver uses recursive backtracking and stops after detecting more than one solution.
+- The automated test suite runs with `npm test`.
 
 ## Risks
 - Intersections may be overwritten incorrectly during backtracking.
