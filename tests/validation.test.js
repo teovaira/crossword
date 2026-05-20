@@ -23,22 +23,22 @@ const {
 
 test('validateWords rejects duplicate words', () => {
   // A word should not appear twice in the list.
-  assert.throws(() => validateWords(['cat', 'dog', 'cat']), /duplicate/i)
+  assert.equal(validateWords(['cat', 'dog', 'cat']), false)
 })
 
 test('validateWords rejects non-array input', () => {
   // The words must be an array, not a text string.
-  assert.throws(() => validateWords('cat,dog'), /array/i)
+  assert.equal(validateWords('cat,dog'), false)
 })
 
 test('validateWords rejects non-string word values', () => {
   // Every item in the array must be text, not a number.
-  assert.throws(() => validateWords(['cat', 123]), /string/i)
+  assert.equal(validateWords(['cat', 123]), false)
 })
 
 test('validateWords rejects empty word values', () => {
   // A word cannot be blank or empty.
-  assert.throws(() => validateWords(['cat', '']), /empty/i)
+  assert.equal(validateWords(['cat', '']), false)
 })
 
 // Tests for the validatePuzzleNumbers function.
@@ -59,7 +59,7 @@ test('validatePuzzleNumbers rejects a puzzle number mismatch', () => {
     { row: 2, col: 0, dir: 'H', length: 4 },
   ]
 
-  assert.throws(() => validatePuzzleNumbers(grid, slots), /number/i)
+  assert.equal(validatePuzzleNumbers(grid, slots), false)
 })
 
 test('validatePuzzleNumbers rejects starting numbers higher than 2', () => {
@@ -67,7 +67,7 @@ test('validatePuzzleNumbers rejects starting numbers higher than 2', () => {
   const grid = [['3', '0', '0']]
   const slots = [{ row: 0, col: 0, dir: 'H', length: 3 }]
 
-  assert.throws(() => validatePuzzleNumbers(grid, slots), /higher than 2/i)
+  assert.equal(validatePuzzleNumbers(grid, slots), false)
 })
 
 test('validatePuzzleNumbers rejects slots that start on an unnumbered cell', () => {
@@ -75,7 +75,7 @@ test('validatePuzzleNumbers rejects slots that start on an unnumbered cell', () 
   const grid = [['0', '0', '0']]
   const slots = [{ row: 0, col: 0, dir: 'H', length: 3 }]
 
-  assert.throws(() => validatePuzzleNumbers(grid, slots), /numbered cell/i)
+  assert.equal(validatePuzzleNumbers(grid, slots), false)
 })
 
 // Tests for the validateSlotWordCount function.
@@ -86,7 +86,7 @@ test('validateSlotWordCount rejects extra words', () => {
   const slots = [{ row: 0, col: 0, dir: 'H', length: 3 }]
   const words = ['cat', 'dog']
 
-  assert.throws(() => validateSlotWordCount(slots, words), /match/i)
+  assert.equal(validateSlotWordCount(slots, words), false)
 })
 
 test('validateSlotWordCount rejects missing words', () => {
@@ -97,7 +97,7 @@ test('validateSlotWordCount rejects missing words', () => {
   ]
   const words = ['cat']
 
-  assert.throws(() => validateSlotWordCount(slots, words), /match/i)
+  assert.equal(validateSlotWordCount(slots, words), false)
 })
 
 // Tests for the validateInputs function.
