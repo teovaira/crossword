@@ -28,8 +28,46 @@ crossword/
 
 ## Commands
 
-No package script is configured yet. Add a `package.json` test script before running the test suite with `npm test`.
+Run the test suite from the project root with:
+
+```bash
+npm test
+```
+
+`crosswordSolver.js` exports the solver function. To run the function with
+arguments from the terminal without editing the source file, use this command
+format:
+
+```bash
+node -e "const crosswordSolver = require('./crosswordSolver.js'); const puzzle = YOUR_PUZZLE_STRING; const words = YOUR_WORDS_ARRAY; crosswordSolver(puzzle, words)"
+```
+
+Replace `YOUR_PUZZLE_STRING` with a puzzle string and `YOUR_WORDS_ARRAY` with an
+array of words.
 
 ## Expected Behavior
 
 `crosswordSolver(puzzle, words)` should print the solved grid when exactly one valid solution exists. It should print `Error` for invalid input, duplicate words, no solution, or multiple solutions.
+
+## Audit Checklist
+
+- `crosswordSolver.js` is present at the project root.
+- The exported function is named `crosswordSolver`.
+- The function takes two arguments:
+  - `puzzle`: a string with rows separated by `\n`
+  - `words`: an array of strings
+- The function prints the solved crossword when there is exactly one valid solution.
+- The function prints `Error` for invalid input, duplicate words, no solution, or multiple solutions.
+- The solver uses a backtracking algorithm.
+- Tests can be run with `npm test`.
+
+### Function Arguments
+
+```js
+const crosswordSolver = require('./crosswordSolver.js')
+
+const puzzle = 'string with rows separated by \\n'
+const words = ['word1', 'word2', 'word3']
+
+crosswordSolver(puzzle, words)
+```
