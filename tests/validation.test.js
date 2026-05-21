@@ -3,7 +3,7 @@
 // Each test checks that validation functions work correctly.
 // A test passes if it gets the expected result, fails if it does not.
 
-const test = require('node:test')
+const { test } = require('node:test')
 const assert = require('node:assert/strict')
 
 const {
