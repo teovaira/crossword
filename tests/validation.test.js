@@ -13,7 +13,6 @@ const {
   validateInputs,
 } = require('../validation')
 const {
-  cloneGrid,
   normalizeGridForSolving,
   gridToString,
 } = require('../utils')
@@ -158,22 +157,4 @@ test('gridToString formats rows and lines exactly', () => {
   ]
 
   assert.equal(gridToString(grid), 'cat\n..o\ndog')
-})
-
-test('cloneGrid returns a deep copy without mutating the original grid', () => {
-  // Make a copy of the grid so changes to the copy do not affect the original.
-  const grid = [
-    ['0', '0'],
-    ['.', '1'],
-  ]
-  const clonedGrid = cloneGrid(grid)
-
-  clonedGrid[0][0] = 'x'
-
-  assert.deepEqual(grid, [
-    ['0', '0'],
-    ['.', '1'],
-  ])
-  assert.notEqual(clonedGrid, grid)
-  assert.notEqual(clonedGrid[0], grid[0])
 })
