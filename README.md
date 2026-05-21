@@ -22,9 +22,9 @@ crossword/
 
 ## Team Ownership
 
-- `parser-logic`: `parser.js`, parser tests, slot detection tests
-- `solver-algorithm`: `solver.js`, solver tests, backtracking behavior
-- `integration-testing`: `crosswordSolver.js`, `validation.js`, integration tests, final output
+- Alex: `parser.js`, parser tests, slot detection tests
+- Efi: `validation.js`, `utils.js`, validation tests, `README.md`, `PRD.md`
+- Theo: `crosswordSolver.js`, `solver.js`, solver tests, integration tests, backtracking behavior
 
 ## Commands
 
@@ -39,11 +39,8 @@ arguments from the terminal without editing the source file, use this command
 format:
 
 ```bash
-node -e "const crosswordSolver = require('./crosswordSolver.js'); const puzzle = YOUR_PUZZLE_STRING; const words = YOUR_WORDS_ARRAY; crosswordSolver(puzzle, words)"
+node -e "const crosswordSolver = require('./crosswordSolver.js'); const puzzle = '2001\n0..0\n1000\n0..0'; const words = ['casa', 'alan', 'ciao', 'anta']; crosswordSolver(puzzle, words)"
 ```
-
-Replace `YOUR_PUZZLE_STRING` with a puzzle string and `YOUR_WORDS_ARRAY` with an
-array of words.
 
 ## Expected Behavior
 

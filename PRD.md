@@ -67,11 +67,8 @@ Run the solver with custom arguments from the project root with this command
 format:
 
 ```bash
-node -e "const crosswordSolver = require('./crosswordSolver.js'); const puzzle = YOUR_PUZZLE_STRING; const words = YOUR_WORDS_ARRAY; crosswordSolver(puzzle, words)"
+node -e "const crosswordSolver = require('./crosswordSolver.js'); const puzzle = '2001\n0..0\n1000\n0..0'; const words = ['casa', 'alan', 'ciao', 'anta']; crosswordSolver(puzzle, words)"
 ```
-
-Replace `YOUR_PUZZLE_STRING` with a puzzle string and `YOUR_WORDS_ARRAY` with an
-array of words.
 
 `node crosswordSolver.js` exits cleanly by itself because the file exports the
 function for the evaluator and tests; it does not include a hard-coded sample
