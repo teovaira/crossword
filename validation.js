@@ -6,11 +6,7 @@ const getSlotStartCount = (slots, row, col, countSlotsStartingAt) => {
   // If a helper function is provided, use it to count how many slots start at this cell.
   // That helper may come from the parser or another part of the program.
   if (typeof countSlotsStartingAt === 'function') {
-    if (countSlotsStartingAt.length >= 3) {
-      return countSlotsStartingAt(slots, row, col)
-    }
-
-    return countSlotsStartingAt(row, col)
+    return countSlotsStartingAt(slots, row, col)
   }
 
   // Otherwise count manually by looking through the slot list.
@@ -53,8 +49,9 @@ const validatePuzzleNumbers = (grid, slots, countSlotsStartingAt) => {
   // A slot is the place where a word will be placed.
   for (const slot of slots) {
     const startCell = grid[slot.row] && grid[slot.row][slot.col]
+    const startCellNumber = Number(startCell)
 
-    if (Number(startCell) <= 0) {
+    if (!Number.isInteger(startCellNumber) || startCellNumber <= 0) {
       return false
     }
   }
